@@ -1,3 +1,4 @@
+# SHA-256 of committed Git blob content; checkout line endings may differ.
 908736b745075f8a45b270bc8235dc678bf7ac8baeec5423a2945ade55daba5e  .gitignore
 f77e6301da6efbf924c51a1d82c76dc3897b86ef44fb3f7bbad921b10fc9cef9  CHANGELOG.md
 31f738b9c469bd728b99a2d162896b263738f4001d1f55e61440a31a36436304  LICENSE
