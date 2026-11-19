@@ -5,10 +5,9 @@ from offline_alarm import AlarmProfile, next_occurrences, WEEKDAYS, WEEKENDS, EV
 
 try:
     EASTERN=ZoneInfo('America/New_York')
-except ZoneInfoNotFoundError:
-    EASTERN=None
+except ZoneInfoNotFoundError as exc:
+    raise RuntimeError('IANA timezone data is required; run python -m pip install -r requirements.txt') from exc
 
-@unittest.skipUnless(EASTERN is not None,'Install IANA tzdata on Windows: python -m pip install tzdata')
 class SchedulerTests(unittest.TestCase):
     def next(self,profiles,after,count=5):
         return next_occurrences(profiles,after,EASTERN,count=count)

@@ -1,5 +1,7 @@
 # Offline Alarm Scheduler
 
+> **About:** Offline, timezone-aware recurring alarm scheduler with weekday profiles, explicit DST behavior, and deterministic tests. Developed independently of vendor firmware; no device firmware included.
+
 **Independent reference implementation** of a recurring alarm scheduler for embedded-style clocks. This is a learning and portfolio project emphasizing local-first behavior, deterministic testing, robust handling of daylight-saving transitions, and a clear separation between scheduling decisions and physical alarm hardware.
 
 Inspired by the author's interest in improving a personally owned **Nanu Arc** alarm clock. **Not affiliated with, approved by, or supported by Nanu Electrics.** No manufacturer firmware, disassembly, decompiler output, proprietary assets, patched images, private captures or copied vendor code are included. **This project is not an installable firmware update.**
@@ -17,15 +19,26 @@ Inspired by the author's interest in improving a personally owned **Nanu Arc** a
 
 ## Run locally
 
-Python 3.11+:
+Requires Python 3.11 or newer. Install the IANA timezone database fallback
+(on Windows, `zoneinfo` generally cannot resolve IANA time zones without it):
 
 ```bash
-python -m unittest discover -s tests -v
+python -m pip install -r requirements.txt
+python tools/run_tests.py
 python -m offline_alarm.demo
 python tools/audit_repo.py --root .
 ```
 
-For Windows systems without IANA timezone data, install the open-source `tzdata` package using `python -m pip install tzdata`. The Python reference model does not require Nanu hardware.
+The test runner **fails on skipped tests**, preventing an unavailable timezone
+database from producing a misleading green result. Standard test discovery also
+fails explicitly when the required IANA timezone data is unavailable.
+
+The `tzdata` package provides local time zone rules: the scheduler performs
+no network access at runtime. Timezone databases require periodic updates
+when daylight-saving legislation changes.
+
+GitHub Actions runs the tests and tracked-file audit on Windows and Linux with
+Python 3.11 and 3.13 (see `.github/workflows/tests.yml`).
 
 The package layout makes `offline_alarm` importable directly from the repository root. The production scheduler is intentionally not coupled to Ghidra or ESP-IDF.
 
