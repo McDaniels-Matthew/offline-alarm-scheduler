@@ -1,0 +1,3 @@
+# IANA timezone database fallback, needed by zoneinfo on Windows.
+# The scheduler itself uses only Python's standard library.
+tzdata>=2025.1,<2028
